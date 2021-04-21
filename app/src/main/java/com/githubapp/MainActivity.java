@@ -1,7 +1,9 @@
 package com.githubapp;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import org.json.JSONArray;
@@ -54,10 +57,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search:
-                Toast.makeText(this, "shanchu", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "更多", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.collect:
-                tocollect();
+               Intent intent = new Intent(this,Lookcollect.class);
+               startActivity(intent);
                 break;
             default:
         }
@@ -68,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //创建主页面和recyclerview的展示。
+        //创建主页面
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -80,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
         author = (TextView) findViewById(R.id.author);
         aclicktotal = (TextView) findViewById(R.id.aclicktotal);
         imageView = (ImageView) findViewById(R.id.cover);
+
+
 
 }
     private void sendRequestWithOkHttp() {
@@ -129,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.runOnUiThread(new Runnable() {
                 public void run() {
                     recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+                 //   StaggeredGridLayoutManager layoutManager = new
+                   //         StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
                     LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(new TextAdapter(textList, MainActivity.this));
@@ -180,6 +188,8 @@ public class MainActivity extends AppCompatActivity {
                         public void run() {
                             recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
                             LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+                           // StaggeredGridLayoutManager layoutManager = new
+                            //        StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
                             recyclerView.setLayoutManager(layoutManager);
                             recyclerView.setAdapter(new TextAdapter(textList, MainActivity.this));
                         }
@@ -190,15 +200,4 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }).start();
-    }
-
-    public void tocollect() {
-        //初始化View
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        TextAdapter adapter = new TextAdapter(LitePal.findAll(Text.class), this);
-        recyclerView.setAdapter(adapter);
-    }
-
-}
+    }}

@@ -7,8 +7,7 @@
 
     <item
         android:id="@+id/search"
-        android:title="删除"
-        android:icon="@drawable/clean"
+        android:title="更多"
         app:showAsAction="never" />
 
     <item
